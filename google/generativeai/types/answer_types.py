@@ -14,7 +14,7 @@
 # limitations under the License.
 from __future__ import annotations
 
-from typing import Union
+from typing import Union, Dict
 
 from google.generativeai import protos
 
@@ -24,7 +24,7 @@ FinishReason = protos.Candidate.FinishReason
 
 FinishReasonOptions = Union[int, str, FinishReason]
 
-_FINISH_REASONS: dict[FinishReasonOptions, FinishReason] = {
+_FINISH_REASONS: Dict[FinishReasonOptions, FinishReason] = {
     FinishReason.FINISH_REASON_UNSPECIFIED: FinishReason.FINISH_REASON_UNSPECIFIED,
     0: FinishReason.FINISH_REASON_UNSPECIFIED,
     "finish_reason_unspecified": FinishReason.FINISH_REASON_UNSPECIFIED,

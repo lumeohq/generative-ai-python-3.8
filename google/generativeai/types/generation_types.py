@@ -17,7 +17,8 @@ from __future__ import annotations
 import collections
 import contextlib
 import sys
-from collections.abc import Iterable, AsyncIterable, Mapping
+# from typing import Iterable, AsyncIterable, Mapping
+from typing import Iterable, AsyncIterable, Mapping # JSM change
 import dataclasses
 import itertools
 import json
@@ -183,10 +184,10 @@ def _normalize_schema(generation_config):
     if isinstance(response_schema, type):
         response_schema = content_types._schema_for_class(response_schema)
     elif isinstance(response_schema, types.GenericAlias):
-        if not str(response_schema).startswith("list["):
+        if not str(response_schema).startswith("List["):
             raise ValueError(
                 f"Invalid input: Could not understand the type of '{response_schema}'. "
-                "Expected one of the following types: `int`, `float`, `str`, `bool`, `typing_extensions.TypedDict`, `dataclass`, or `list[...]`."
+                "Expected one of the following types: `int`, `float`, `str`, `bool`, `typing_extensions.TypedDict`, `dataclass`, or `List[...]`."
             )
         response_schema = content_types._schema_for_class(response_schema)
 
@@ -228,7 +229,7 @@ def _join_citation_metadatas(
 
 
 def _join_safety_ratings_lists(
-    safety_ratings_lists: Iterable[list[protos.SafetyRating]],
+    safety_ratings_lists: Iterable[List[protos.SafetyRating]],
 ):
     ratings = {}
     blocked = collections.defaultdict(list)
@@ -296,7 +297,7 @@ def _join_candidates(candidates: Iterable[protos.Candidate]):
     )
 
 
-def _join_candidate_lists(candidate_lists: Iterable[list[protos.Candidate]]):
+def _join_candidate_lists(candidate_lists: Iterable[List[protos.Candidate]]):
     # Assuming that is a candidate ends, it is no longer returned in the list of
     # candidates and that's why candidates have an index
     candidates = collections.defaultdict(list)

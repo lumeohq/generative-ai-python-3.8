@@ -15,10 +15,10 @@
 from __future__ import annotations
 
 import dataclasses
-from collections.abc import Iterable, Sequence
+from typing import Iterable, Sequence
 import itertools
 from typing import Any, Iterable, overload, TypeVar
-
+from typing import Dict, List, Tuple
 import google.ai.generativelanguage as glm
 
 from google.generativeai import protos
@@ -40,7 +40,7 @@ try:
 except AttributeError:
     T = TypeVar("T")
 
-    def _batched(iterable: Iterable[T], n: int) -> Iterable[list[T]]:
+    def _batched(iterable: Iterable[T], n: int) -> Iterable[List[T]]:
         if n < 1:
             raise ValueError(f"Batch size `n` must be >1, got: {n}")
         batch = []
@@ -54,7 +54,7 @@ except AttributeError:
             yield batch
 
 
-def _make_text_prompt(prompt: str | dict[str, str]) -> protos.TextPrompt:
+def _make_text_prompt(prompt: str | Dict[str, str]) -> protos.TextPrompt:
     """
     Creates a `protos.TextPrompt` object based on the provided prompt input.
 

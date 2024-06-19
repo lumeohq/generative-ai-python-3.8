@@ -14,6 +14,7 @@
 # limitations under the License.
 import pathlib
 from typing import Any
+from typing import Dict, List, Tuple
 
 from absl.testing import absltest
 from absl.testing import parameterized
@@ -21,7 +22,6 @@ from google.generativeai import protos
 from google.generativeai import responder
 import IPython.display
 import PIL.Image
-
 HERE = pathlib.Path(__file__).parent
 TEST_PNG_PATH = HERE / "test_img.png"
 TEST_PNG_URL = "https://storage.googleapis.com/generativeai-downloads/data/test_img.png"
@@ -221,7 +221,7 @@ class UnitTests(parameterized.TestCase):
         ["str", str, protos.Schema(type=protos.Type.STRING)],
         [
             "list",
-            list[str],
+            List[str],
             protos.Schema(
                 type=protos.Type.ARRAY,
                 items=protos.Schema(type=protos.Type.STRING),
@@ -229,7 +229,7 @@ class UnitTests(parameterized.TestCase):
         ],
         [
             "list-list-int",
-            list[list[int]],
+            List[List[int]],
             protos.Schema(
                 type=protos.Type.ARRAY,
                 items=protos.Schema(
@@ -241,7 +241,7 @@ class UnitTests(parameterized.TestCase):
             ),
         ],
         ["dict", dict, protos.Schema(type=protos.Type.OBJECT)],
-        ["dict-str-any", dict[str, Any], protos.Schema(type=protos.Type.OBJECT)],
+        ["dict-str-any", Dict[str, Any], protos.Schema(type=protos.Type.OBJECT)],
     )
     def test_auto_schema(self, annotation, expected):
         def fun(a: annotation):

@@ -31,7 +31,7 @@ def get_placeholders(prompt: str) -> AbstractSet[str]:
     Returns:
       A sequence of placeholders in `prompt`.
     """
-    placeholders: list[str] = []
+    placeholders: List[str] = []
     for _, field_name, _, _ in string.Formatter().parse(prompt):
         if field_name is not None:
             placeholders.append(field_name)

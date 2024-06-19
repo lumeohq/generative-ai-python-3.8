@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import copy
-from collections.abc import Iterable
+from typing import Iterable
 import datetime
 import dataclasses
 import pathlib

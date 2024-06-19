@@ -602,7 +602,7 @@ class UnitTests(parameterized.TestCase):
             str,
             protos.Schema(type="STRING"),
         ],
-        ["list_of_str", list[str], protos.Schema(type="ARRAY", items=protos.Schema(type="STRING"))],
+        ["list_of_str", List[str], protos.Schema(type="ARRAY", items=protos.Schema(type="STRING"))],
         [
             "fancy",
             Person,

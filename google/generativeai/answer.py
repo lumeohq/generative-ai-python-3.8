@@ -15,9 +15,10 @@
 from __future__ import annotations
 
 import dataclasses
-from collections.abc import Iterable
+from typing import Iterable
 import itertools
 from typing import Any, Iterable, Union, Mapping, Optional
+from typing import Dict, List, Tuple
 from typing_extensions import TypedDict
 
 import google.ai.generativelanguage as glm
@@ -40,7 +41,7 @@ AnswerStyle = protos.GenerateAnswerRequest.AnswerStyle
 
 AnswerStyleOptions = Union[int, str, AnswerStyle]
 
-_ANSWER_STYLES: dict[AnswerStyleOptions, AnswerStyle] = {
+_ANSWER_STYLES: Dict[AnswerStyleOptions, AnswerStyle] = {
     AnswerStyle.ANSWER_STYLE_UNSPECIFIED: AnswerStyle.ANSWER_STYLE_UNSPECIFIED,
     0: AnswerStyle.ANSWER_STYLE_UNSPECIFIED,
     "answer_style_unspecified": AnswerStyle.ANSWER_STYLE_UNSPECIFIED,
@@ -68,7 +69,7 @@ def to_answer_style(x: AnswerStyleOptions) -> AnswerStyle:
 
 GroundingPassageOptions = (
     Union[
-        protos.GroundingPassage, tuple[str, content_types.ContentType], content_types.ContentType
+        protos.GroundingPassage, Tuple[str, content_types.ContentType], content_types.ContentType
     ],
 )
 

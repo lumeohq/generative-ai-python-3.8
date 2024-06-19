@@ -18,7 +18,7 @@ import datetime
 import re
 import abc
 import dataclasses
-from typing import Any, AsyncIterable, Optional, Union, Iterable, Mapping
+from typing import Any, AsyncIterable, Optional, Union, Iterable, Mapping, Dict, Tuple, List
 from typing_extensions import deprecated  # type: ignore
 
 import google.ai.generativelanguage as glm
@@ -54,25 +54,25 @@ StateOptions = Union[str, int, State]
 ChunkOptions = Union[
     protos.Chunk,
     str,
-    tuple[str, str],
-    tuple[str, str, Any],
+    Tuple[str, str],
+    Tuple[str, str, Any],
     Mapping[str, Any],
 ]  # fmt: no
 
 BatchCreateChunkOptions = Union[
     protos.BatchCreateChunksRequest,
     Mapping[str, str],
-    Mapping[str, tuple[str, str]],
+    Mapping[str, Tuple[str, str]],
     Iterable[ChunkOptions],
 ]  # fmt: no
 
-UpdateChunkOptions = Union[protos.UpdateChunkRequest, Mapping[str, Any], tuple[str, Any]]
+UpdateChunkOptions = Union[protos.UpdateChunkRequest, Mapping[str, Any], Tuple[str, Any]]
 
 BatchUpdateChunksOptions = Union[protos.BatchUpdateChunksRequest, Iterable[UpdateChunkOptions]]
 
-BatchDeleteChunkOptions = Union[list[protos.DeleteChunkRequest], Iterable[str]]
+BatchDeleteChunkOptions = Union[List[protos.DeleteChunkRequest], Iterable[str]]
 
-_OPERATOR: dict[OperatorOptions, Operator] = {
+_OPERATOR: Dict[OperatorOptions, Operator] = {
     Operator.OPERATOR_UNSPECIFIED: Operator.OPERATOR_UNSPECIFIED,
     0: Operator.OPERATOR_UNSPECIFIED,
     "operator_unspecified": Operator.OPERATOR_UNSPECIFIED,
@@ -112,7 +112,7 @@ _OPERATOR: dict[OperatorOptions, Operator] = {
     "not in": Operator.EXCLUDES,
 }
 
-_STATE: dict[StateOptions, State] = {
+_STATE: Dict[StateOptions, State] = {
     State.STATE_UNSPECIFIED: State.STATE_UNSPECIFIED,
     0: State.STATE_UNSPECIFIED,
     "state_unspecifed": State.STATE_UNSPECIFIED,
@@ -401,7 +401,7 @@ class Corpus:
 
     def update(
         self,
-        updates: dict[str, Any],
+        updates: Dict[str, Any],
         client: glm.RetrieverServiceClient | None = None,
         request_options: helper_types.RequestOptionsType | None = None,
     ):
@@ -441,7 +441,7 @@ class Corpus:
 
     async def update_async(
         self,
-        updates: dict[str, Any],
+        updates: Dict[str, Any],
         client: glm.RetrieverServiceAsyncClient | None = None,
         request_options: helper_types.RequestOptionsType | None = None,
     ):
@@ -723,7 +723,7 @@ class Corpus:
 
     # PERMISSIONS STUBS END
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         result = {"name": self.name, "display_name": self.display_name}
         return result
 
@@ -744,7 +744,7 @@ class Document(abc.ABC):
 
     name: str
     display_name: str
-    custom_metadata: list[CustomMetadata]
+    custom_metadata: List[CustomMetadata]
     create_time: datetime.datetime
     update_time: datetime.datetime
 
@@ -1052,7 +1052,7 @@ class Document(abc.ABC):
         results_count: int | None = None,
         client: glm.RetrieverServiceClient | None = None,
         request_options: helper_types.RequestOptionsType | None = None,
-    ) -> list[RelevantChunk]:
+    ) -> List[RelevantChunk]:
         """
         Query a `Document` in the `Corpus` for information.
 
@@ -1107,7 +1107,7 @@ class Document(abc.ABC):
         results_count: int | None = None,
         client: glm.RetrieverServiceAsyncClient | None = None,
         request_options: helper_types.RequestOptionsType | None = None,
-    ) -> list[RelevantChunk]:
+    ) -> List[RelevantChunk]:
         """This is the async version of `Document.query`."""
         if request_options is None:
             request_options = {}
@@ -1153,7 +1153,7 @@ class Document(abc.ABC):
 
     def update(
         self,
-        updates: dict[str, Any],
+        updates: Dict[str, Any],
         client: glm.RetrieverServiceClient | None = None,
         request_options: helper_types.RequestOptionsType | None = None,
     ):
@@ -1192,7 +1192,7 @@ class Document(abc.ABC):
 
     async def update_async(
         self,
-        updates: dict[str, Any],
+        updates: Dict[str, Any],
         client: glm.RetrieverServiceAsyncClient | None = None,
         request_options: helper_types.RequestOptionsType | None = None,
     ):
@@ -1515,7 +1515,7 @@ class Document(abc.ABC):
                 "or multiple 'protos.DeleteChunkRequest's."
             )
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         result = {
             "name": self.name,
             "display_name": self.display_name,
@@ -1547,7 +1547,7 @@ class Chunk(abc.ABC):
 
     name: str
     data: ChunkData
-    custom_metadata: list[CustomMetadata] | None
+    custom_metadata: List[CustomMetadata] | None
     state: State
     create_time: datetime.datetime | None
     update_time: datetime.datetime | None
@@ -1596,7 +1596,7 @@ class Chunk(abc.ABC):
 
     def update(
         self,
-        updates: dict[str, Any],
+        updates: Dict[str, Any],
         client: glm.RetrieverServiceClient | None = None,
         request_options: helper_types.RequestOptionsType | None = None,
     ):
@@ -1645,7 +1645,7 @@ class Chunk(abc.ABC):
 
     async def update_async(
         self,
-        updates: dict[str, Any],
+        updates: Dict[str, Any],
         client: glm.RetrieverServiceAsyncClient | None = None,
         request_options: helper_types.RequestOptionsType | None = None,
     ):
@@ -1683,7 +1683,7 @@ class Chunk(abc.ABC):
         await client.update_chunk(request, **request_options)
         return self
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         result = {
             "name": self.name,
             "data": dataclasses.asdict(self.data),

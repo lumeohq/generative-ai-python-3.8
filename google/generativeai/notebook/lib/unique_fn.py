@@ -34,7 +34,7 @@ def unique_fn(
     Returns:
       A sequence of indices indicating which entries have unique results.
     """
-    indices: list[int] = []
+    indices: List[int] = []
     seen_entries = set()
     for idx, row in enumerate(rows):
         value = row.result_value()

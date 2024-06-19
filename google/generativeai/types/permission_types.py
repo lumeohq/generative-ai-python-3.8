@@ -15,7 +15,7 @@
 from __future__ import annotations
 
 import dataclasses
-from typing import Optional, Union, Any, Iterable, AsyncIterable
+from typing import Optional, Union, Any, Iterable, AsyncIterable, Dict
 import re
 
 import google.ai.generativelanguage as glm
@@ -35,7 +35,7 @@ Role = protos.Permission.Role
 GranteeTypeOptions = Union[str, int, GranteeType]
 RoleOptions = Union[str, int, Role]
 
-_GRANTEE_TYPE: dict[GranteeTypeOptions, GranteeType] = {
+_GRANTEE_TYPE: Dict[GranteeTypeOptions, GranteeType] = {
     GranteeType.GRANTEE_TYPE_UNSPECIFIED: GranteeType.GRANTEE_TYPE_UNSPECIFIED,
     0: GranteeType.GRANTEE_TYPE_UNSPECIFIED,
     "grantee_type_unspecified": GranteeType.GRANTEE_TYPE_UNSPECIFIED,
@@ -51,7 +51,7 @@ _GRANTEE_TYPE: dict[GranteeTypeOptions, GranteeType] = {
     "everyone": GranteeType.EVERYONE,
 }
 
-_ROLE: dict[RoleOptions, Role] = {
+_ROLE: Dict[RoleOptions, Role] = {
     Role.ROLE_UNSPECIFIED: Role.ROLE_UNSPECIFIED,
     0: Role.ROLE_UNSPECIFIED,
     "role_unspecified": Role.ROLE_UNSPECIFIED,
@@ -133,7 +133,7 @@ class Permission:
 
     def update(
         self,
-        updates: dict[str, Any],
+        updates: Dict[str, Any],
         client: glm.PermissionServiceClient | None = None,
     ) -> Permission:
         """
@@ -170,7 +170,7 @@ class Permission:
 
     async def update_async(
         self,
-        updates: dict[str, Any],
+        updates: Dict[str, Any],
         client: glm.PermissionServiceAsyncClient | None = None,
     ) -> Permission:
         """
@@ -206,7 +206,7 @@ class Permission:
             email_address=self.email_address,
         )
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         return dataclasses.asdict(self)
 
     @classmethod

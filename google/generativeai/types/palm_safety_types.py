@@ -14,7 +14,10 @@
 # limitations under the License.
 from __future__ import annotations
 
-from collections.abc import Mapping
+from typing import Mapping
+
+from typing import Mapping, List # JSM change
+
 
 import enum
 import typing
@@ -210,7 +213,7 @@ class LooseSafetySettingDict(TypedDict):
 
 
 EasySafetySetting = Mapping[HarmCategoryOptions, HarmBlockThresholdOptions]
-EasySafetySettingDict = dict[HarmCategoryOptions, HarmBlockThresholdOptions]
+EasySafetySettingDict = Dict[HarmCategoryOptions, HarmBlockThresholdOptions]
 
 SafetySettingOptions = Union[EasySafetySetting, Iterable[LooseSafetySettingDict], None]
 
@@ -228,7 +231,7 @@ def to_easy_safety_dict(settings: SafetySettingOptions) -> EasySafetySettingDict
 
 def normalize_safety_settings(
     settings: SafetySettingOptions,
-) -> list[SafetySettingDict] | None:
+) -> List[SafetySettingDict] | None:
     if settings is None:
         return None
     if isinstance(settings, Mapping):

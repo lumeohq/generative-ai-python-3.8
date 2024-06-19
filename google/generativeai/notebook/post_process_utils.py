@@ -112,7 +112,7 @@ def validate_one_post_processing_expression(
 
 def _resolve_one_post_processing_expression(
     tokens: Sequence[str],
-) -> tuple[str, Any]:
+) -> Tuple[str, Any]:
     """Returns name and the resolved expression."""
     validate_one_post_processing_expression(tokens)
 
@@ -149,7 +149,7 @@ def resolve_post_processing_tokens(
     Returns:
       A sequence of ParsedPostProcessExprs.
     """
-    results: list[ParsedPostProcessExpr] = []
+    results: List[ParsedPostProcessExpr] = []
     for expression in tokens:
         expr_name, expr_value = _resolve_one_post_processing_expression(expression)
         if isinstance(expr_value, ParsedPostProcessExpr):

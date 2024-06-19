@@ -107,7 +107,7 @@ class FlagDef(abc.ABC):
     dest_type: type[_DESTTYPES] | None = None
     parse_to_dest_type_fn: _PARSEFN | None = None
 
-    choices: list[_PARSETYPES] | None = None
+    choices: List[_PARSETYPES] | None = None
     help_msg: str | None = None
 
     @abc.abstractmethod

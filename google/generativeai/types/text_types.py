@@ -33,11 +33,11 @@ class TokenCount(TypedDict):
 
 
 class EmbeddingDict(TypedDict):
-    embedding: list[float]
+    embedding: List[float]
 
 
 class BatchEmbeddingDict(TypedDict):
-    embedding: list[list[float]]
+    embedding: List[List[float]]
 
 
 class TextCompletion(TypedDict, total=False):

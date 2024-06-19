@@ -6,7 +6,8 @@ import dataclasses
 import pathlib
 import types
 from typing import Any, cast
-from collections.abc import Sequence
+from typing import Dict, List, Tuple
+from typing import Sequence
 import httplib2
 
 import google.ai.generativelanguage as glm
@@ -105,12 +106,12 @@ class FileServiceAsyncClient(glm.FileServiceAsyncClient):
 
 @dataclasses.dataclass
 class _ClientManager:
-    client_config: dict[str, Any] = dataclasses.field(default_factory=dict)
-    default_metadata: Sequence[tuple[str, str]] = ()
+    client_config: Dict[str, Any] = dataclasses.field(default_factory=dict)
+    default_metadata: Sequence[Tuple[str, str]] = ()
 
     discuss_client: glm.DiscussServiceClient | None = None
     discuss_async_client: glm.DiscussServiceAsyncClient | None = None
-    clients: dict[str, Any] = dataclasses.field(default_factory=dict)
+    clients: Dict[str, Any] = dataclasses.field(default_factory=dict)
 
     def configure(
         self,
@@ -124,9 +125,9 @@ class _ClientManager:
         # We could accept a dict since all the `Transport` classes take the same args,
         # but that seems rare. Users that need it can just switch to the low level API.
         transport: str | None = None,
-        client_options: client_options_lib.ClientOptions | dict[str, Any] | None = None,
+        client_options: client_options_lib.ClientOptions | Dict[str, Any] | None = None,
         client_info: gapic_v1.client_info.ClientInfo | None = None,
-        default_metadata: Sequence[tuple[str, str]] = (),
+        default_metadata: Sequence[Tuple[str, str]] = (),
     ) -> None:
         """Initializes default client configurations using specified parameters or environment variables.
 
@@ -282,7 +283,7 @@ def configure(
     transport: str | None = None,
     client_options: client_options_lib.ClientOptions | dict | None = None,
     client_info: gapic_v1.client_info.ClientInfo | None = None,
-    default_metadata: Sequence[tuple[str, str]] = (),
+    default_metadata: Sequence[Tuple[str, str]] = (),
 ):
     """Captures default client configuration.
 

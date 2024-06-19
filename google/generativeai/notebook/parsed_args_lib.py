@@ -75,11 +75,11 @@ class ParsedArgs:
     compile_save_name: str | None = None
 
     # For compare command.
-    lhs_name_and_fn: tuple[str, llm_function.LLMFunction] | None = None
-    rhs_name_and_fn: tuple[str, llm_function.LLMFunction] | None = None
+    lhs_name_and_fn: Tuple[str, llm_function.LLMFunction] | None = None
+    rhs_name_and_fn: Tuple[str, llm_function.LLMFunction] | None = None
 
     # For compare and eval commands.
-    compare_fn: Sequence[tuple[str, TextResultCompareFn]] = dataclasses.field(default_factory=list)
+    compare_fn: Sequence[Tuple[str, TextResultCompareFn]] = dataclasses.field(default_factory=list)
 
     # For eval command.
     ground_truth: Sequence[str] = dataclasses.field(default_factory=list)

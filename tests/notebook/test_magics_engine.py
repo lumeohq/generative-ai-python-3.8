@@ -110,7 +110,7 @@ class FakeIPythonEnv(ipython_env.IPythonEnv):
 class FakeInputsSource(llmfn_inputs_source.LLMFnInputsSource):
     def _to_normalized_inputs_impl(
         self,
-    ) -> tuple[Sequence[Mapping[str, str]], Callable[[], None]]:
+    ) -> Tuple[Sequence[Mapping[str, str]], Callable[[], None]]:
         return [{"word": "quack3"}, {"word": "quack4"}], lambda: None
 
 
@@ -139,7 +139,7 @@ class MockGSpreadClient(gspread_client.GSpreadClient):
         self,
         sid: sheets_id.SheetsIdentifier,
         worksheet_id: int,
-    ) -> tuple[Sequence[Mapping[str, str]], Callable[[], None]]:
+    ) -> Tuple[Sequence[Mapping[str, str]], Callable[[], None]]:
         self.get_all_records_name = sid.name()
         self.get_all_records_worksheet_id = worksheet_id
         return [{"word": "quack5"}, {"word": "quack6"}], lambda: None

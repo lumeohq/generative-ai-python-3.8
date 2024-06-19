@@ -15,7 +15,8 @@
 """Type definitions for the models service."""
 from __future__ import annotations
 
-from collections.abc import Mapping
+# from typing import Mapping
+from typing import Mapping # JSM change
 import csv
 import dataclasses
 import datetime
@@ -23,8 +24,8 @@ import json
 import pathlib
 import re
 
-from typing import Any, Iterable, Union
-
+from typing import Any, Iterable, Union, Dict, List
+from typing import Dict, List, Tuple
 import urllib.request
 from typing_extensions import TypedDict
 
@@ -60,7 +61,7 @@ def valid_tuned_model_name(name: str) -> bool:
 
 
 # fmt: off
-_TUNED_MODEL_STATES: dict[TunedModelStateOptions, TunedModelState] = {
+_TUNED_MODEL_STATES: Dict[TunedModelStateOptions, TunedModelState] = {
     TunedModelState.ACTIVE: TunedModelState.ACTIVE,
     int(TunedModelState.ACTIVE): TunedModelState.ACTIVE,
     "active": TunedModelState.ACTIVE,
@@ -115,7 +116,7 @@ class Model:
     description: str
     input_token_limit: int
     output_token_limit: int
-    supported_generation_methods: list[str]
+    supported_generation_methods: List[str]
     temperature: float | None = None
     top_p: float | None = None
     top_k: int | None = None
@@ -127,7 +128,7 @@ def _fix_microseconds(match):
     return f".{int(round(fraction*1e6)):06d}"
 
 
-def idecode_time(parent: dict["str", Any], name: str):
+def idecode_time(parent: Dict["str", Any], name: str):
     time = parent.pop(name, None)
     if time is not None:
         if "." in time:
@@ -140,7 +141,7 @@ def idecode_time(parent: dict["str", Any], name: str):
         parent[name] = dt
 
 
-def decode_tuned_model(tuned_model: protos.TunedModel | dict["str", Any]) -> TunedModel:
+def decode_tuned_model(tuned_model: protos.TunedModel | Dict["str", Any]) -> TunedModel:
     if isinstance(tuned_model, protos.TunedModel):
         tuned_model = type(tuned_model).to_dict(tuned_model)  # pytype: disable=attribute-error
     tuned_model["state"] = to_tuned_model_state(tuned_model.pop("state", None))
@@ -205,7 +206,7 @@ class TunedModel:
 class TuningTask:
     start_time: datetime.datetime | None = None
     complete_time: datetime.datetime | None = None
-    snapshots: list[TuningSnapshot] = dataclasses.field(default_factory=list)
+    snapshots: List[TuningSnapshot] = dataclasses.field(default_factory=list)
     hyperparameters: Hyperparameters | None = None
 
 
@@ -214,7 +215,7 @@ class TuningExampleDict(TypedDict):
     output: str
 
 
-TuningExampleOptions = Union[TuningExampleDict, protos.TuningExample, tuple[str, str], list[str]]
+TuningExampleOptions = Union[TuningExampleDict, protos.TuningExample, Tuple[str, str], List[str]]
 
 # TODO(markdaoust): gs:// URLS? File-type argument for files without extension?
 TuningDataOptions = Union[

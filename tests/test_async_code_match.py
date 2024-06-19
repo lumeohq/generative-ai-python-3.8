@@ -20,7 +20,7 @@ import re
 
 from absl.testing import absltest
 from absl.testing import parameterized
-
+from typing import Dict, List, Tuple
 EXEMPT_DIRS = ["notebook"]
 EXEMPT_DECORATORS = ["overload", "property", "setter", "abstractmethod", "staticmethod"]
 EXEMPT_FILES = ["client.py", "version.py", "discuss.py", "files.py"]
@@ -80,7 +80,7 @@ class CodeMatch(absltest.TestCase):
             if fpath.name in EXEMPT_FILES or any([d in fpath.parts for d in EXEMPT_DIRS]):
                 continue
             # print(f"Checking {fpath.absolute()}")
-            code_match_funcs: dict[str, ast.AST] = {}
+            code_match_funcs: Dict[str, ast.AST] = {}
             source = fpath.read_text()
             source_nodes = ast.parse(source)
 

@@ -92,7 +92,7 @@ class ArgumentParser(argparse.ArgumentParser):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._messages: list[str] = []
+        self._messages: List[str] = []
 
     def _print_message(self, message, file=None):
         """Override ArgumentParser's _print_message() method."""

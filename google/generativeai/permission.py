@@ -15,7 +15,7 @@
 from __future__ import annotations
 
 from typing import Callable
-
+from typing import Dict, List, Tuple
 import google.ai.generativelanguage as glm
 
 from google.generativeai.types import permission_types
@@ -23,7 +23,7 @@ from google.generativeai.types import retriever_types
 from google.generativeai.types import model_types
 
 
-_RESOURCE_TYPE: dict[str, str] = {
+_RESOURCE_TYPE: Dict[str, str] = {
     "corpus": "corpora",
     "corpora": "corpora",
     "tunedmodel": "tunedModels",

@@ -16,7 +16,7 @@ import dataclasses
 import pathlib
 import typing_extensions
 from typing import Any, Union
-
+from typing import Dict, List, Tuple
 from absl.testing import absltest
 from absl.testing import parameterized
 from google.generativeai import protos
@@ -62,7 +62,7 @@ class ADataClassWithNullable:
 
 @dataclasses.dataclass
 class ADataClassWithList:
-    a: list[int]
+    a: List[int]
 
 
 class UnitTests(parameterized.TestCase):
@@ -127,8 +127,8 @@ class UnitTests(parameterized.TestCase):
         ["protos.Content", protos.Content(parts=[{"text": "Hello world!"}])],
         ["ContentDict", {"parts": [{"text": "Hello world!"}]}],
         ["ContentDict-str", {"parts": ["Hello world!"]}],
-        ["list[parts]", [{"text": "Hello world!"}]],
-        ["list[str]", ["Hello world!"]],
+        ["List[parts]", [{"text": "Hello world!"}]],
+        ["List[str]", ["Hello world!"]],
         ["iterator[parts]", iter([{"text": "Hello world!"}])],
         ["part", {"text": "Hello world!"}],
         ["str", "Hello world!"],
@@ -143,7 +143,7 @@ class UnitTests(parameterized.TestCase):
 
     @parameterized.named_parameters(
         ["ContentDict", {"parts": [PIL.Image.open(TEST_PNG_PATH)]}],
-        ["list[Image]", [PIL.Image.open(TEST_PNG_PATH)]],
+        ["List[Image]", [PIL.Image.open(TEST_PNG_PATH)]],
         ["Image", PIL.Image.open(TEST_PNG_PATH)],
     )
     def test_img_to_content(self, example):
@@ -168,8 +168,8 @@ class UnitTests(parameterized.TestCase):
         self.assertEqual(part.text, "Hello world!")
 
     @parameterized.named_parameters(
-        ["list[parts]", [{"text": "Hello world!"}]],
-        ["list[str]", ["Hello world!"]],
+        ["List[parts]", [{"text": "Hello world!"}]],
+        ["List[str]", ["Hello world!"]],
         ["iterator[parts]", iter([{"text": "Hello world!"}])],
         ["part", {"text": "Hello world!"}],
         ["str", "Hello world!"],
@@ -400,7 +400,7 @@ class UnitTests(parameterized.TestCase):
         ["nullable_str", Union[str, None], protos.Schema(type=protos.Type.STRING, nullable=True)],
         [
             "list",
-            list[str],
+            List[str],
             protos.Schema(
                 type=protos.Type.ARRAY,
                 items=protos.Schema(type=protos.Type.STRING),
@@ -408,7 +408,7 @@ class UnitTests(parameterized.TestCase):
         ],
         [
             "list-list-int",
-            list[list[int]],
+            List[List[int]],
             protos.Schema(
                 type=protos.Type.ARRAY,
                 items=protos.Schema(
@@ -420,7 +420,7 @@ class UnitTests(parameterized.TestCase):
             ),
         ],
         ["dict", dict, protos.Schema(type=protos.Type.OBJECT)],
-        ["dict-str-any", dict[str, Any], protos.Schema(type=protos.Type.OBJECT)],
+        ["dict-str-any", Dict[str, Any], protos.Schema(type=protos.Type.OBJECT)],
         [
             "dataclass",
             ADataClass,
@@ -440,7 +440,7 @@ class UnitTests(parameterized.TestCase):
         ],
         [
             "list_of_dataclass",
-            list[ADataClass],
+            List[ADataClass],
             protos.Schema(
                 type="ARRAY",
                 items=protos.Schema(
@@ -467,7 +467,7 @@ class UnitTests(parameterized.TestCase):
         ],
         [
             "list_of_dataclass_with_list",
-            list[ADataClassWithList],
+            List[ADataClassWithList],
             protos.Schema(
                 items=protos.Schema(
                     type=protos.Type.OBJECT,
@@ -478,7 +478,7 @@ class UnitTests(parameterized.TestCase):
         ],
         [
             "list_of_nullable",
-            list[Union[int, None]],
+            List[Union[int, None]],
             protos.Schema(
                 type="ARRAY",
                 items={"type_": protos.Type.INTEGER, "nullable": True},

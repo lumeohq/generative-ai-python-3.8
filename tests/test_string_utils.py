@@ -30,7 +30,7 @@ from absl.testing import parameterized
 class MyClass:
     a: int
     b: float
-    c: list[int]
+    c: List[int]
     d: Any
 
 

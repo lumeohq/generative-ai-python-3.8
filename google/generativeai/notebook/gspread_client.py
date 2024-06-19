@@ -68,7 +68,7 @@ class GSpreadClient(abc.ABC):
         self,
         sid: sheets_id.SheetsIdentifier,
         worksheet_id: int,
-    ) -> tuple[Sequence[Mapping[str, str]], Callable[[], None]]:
+    ) -> Tuple[Sequence[Mapping[str, str]], Callable[[], None]]:
         """Returns all records for a Google Sheets worksheet."""
 
     @abc.abstractmethod
@@ -126,7 +126,7 @@ class GSpreadClientImpl(GSpreadClient):
         self,
         sid: sheets_id.SheetsIdentifier,
         worksheet_id: int,
-    ) -> tuple[Sequence[Mapping[str, str]], Callable[[], None]]:
+    ) -> Tuple[Sequence[Mapping[str, str]], Callable[[], None]]:
         sheet = self._open(sid)
         worksheet = sheet.get_worksheet(worksheet_id)
 
@@ -195,7 +195,7 @@ class NullGSpreadClient(GSpreadClient):
         self,
         sid: sheets_id.SheetsIdentifier,
         worksheet_id: int,
-    ) -> tuple[Sequence[Mapping[str, str]], Callable[[], None]]:
+    ) -> Tuple[Sequence[Mapping[str, str]], Callable[[], None]]:
         raise _get_import_error()
 
     def write_records(

@@ -16,7 +16,7 @@ from __future__ import annotations
 
 import typing
 from typing import Any, Literal
-
+from typing import Dict, List, Tuple
 import google.ai.generativelanguage as glm
 
 from google.generativeai import protos
@@ -382,7 +382,7 @@ def update_tuned_model(
 @typing.overload
 def update_tuned_model(
     tuned_model: str,
-    updates: dict[str, Any],
+    updates: Dict[str, Any],
     *,
     client: glm.ModelServiceClient | None = None,
     request_options: helper_types.RequestOptionsType | None = None,
@@ -392,7 +392,7 @@ def update_tuned_model(
 
 def update_tuned_model(
     tuned_model: str | protos.TunedModel,
-    updates: dict[str, Any] | None = None,
+    updates: Dict[str, Any] | None = None,
     *,
     client: glm.ModelServiceClient | None = None,
     request_options: helper_types.RequestOptionsType | None = None,

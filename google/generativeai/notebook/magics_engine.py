@@ -16,7 +16,7 @@
 from __future__ import annotations
 
 from typing import AbstractSet, Sequence
-
+from typing import Dict, List, Tuple
 from google.generativeai.notebook import argument_parser
 from google.generativeai.notebook import cmd_line_parser
 from google.generativeai.notebook import command
@@ -45,7 +45,7 @@ class MagicsEngine:
     ):
         self._ipython_env = env
         models = registry or model_registry.ModelRegistry()
-        self._cmd_handlers: dict[parsed_args_lib.CommandName, command.Command] = {
+        self._cmd_handlers: Dict[parsed_args_lib.CommandName, command.Command] = {
             parsed_args_lib.CommandName.RUN_CMD: run_cmd.RunCommand(models=models, env=env),
             parsed_args_lib.CommandName.COMPILE_CMD: compile_cmd.CompileCommand(
                 models=models, env=env
@@ -58,10 +58,10 @@ class MagicsEngine:
         self,
         line: str,
         placeholders: AbstractSet[str],
-    ) -> tuple[parsed_args_lib.ParsedArgs, parsed_args_lib.PostProcessingTokens]:
+    ) -> Tuple[parsed_args_lib.ParsedArgs, parsed_args_lib.PostProcessingTokens]:
         return cmd_line_parser.CmdLineParser().parse_line(line, placeholders)
 
-    def _get_handler(self, line: str, placeholders: AbstractSet[str]) -> tuple[
+    def _get_handler(self, line: str, placeholders: AbstractSet[str]) -> Tuple[
         command.Command,
         parsed_args_lib.ParsedArgs,
         Sequence[post_process_utils.ParsedPostProcessExpr],

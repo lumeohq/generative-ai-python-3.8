@@ -16,7 +16,7 @@ from __future__ import annotations
 
 import itertools
 from typing import Any, Iterable, overload, TypeVar, Union, Mapping
-
+from typing import Dict, List, Tuple
 import google.ai.generativelanguage as glm
 from google.generativeai import protos
 
@@ -35,7 +35,7 @@ EmbeddingTaskType = protos.TaskType
 
 EmbeddingTaskTypeOptions = Union[int, str, EmbeddingTaskType]
 
-_EMBEDDING_TASK_TYPE: dict[EmbeddingTaskTypeOptions, EmbeddingTaskType] = {
+_EMBEDDING_TASK_TYPE: Dict[EmbeddingTaskTypeOptions, EmbeddingTaskType] = {
     EmbeddingTaskType.TASK_TYPE_UNSPECIFIED: EmbeddingTaskType.TASK_TYPE_UNSPECIFIED,
     0: EmbeddingTaskType.TASK_TYPE_UNSPECIFIED,
     "task_type_unspecified": EmbeddingTaskType.TASK_TYPE_UNSPECIFIED,
@@ -81,7 +81,7 @@ try:
 except AttributeError:
     T = TypeVar("T")
 
-    def _batched(iterable: Iterable[T], n: int) -> Iterable[list[T]]:
+    def _batched(iterable: Iterable[T], n: int) -> Iterable[List[T]]:
         if n < 1:
             raise ValueError(
                 f"Invalid input: The batch size 'n' must be a positive integer. You entered: {n}. Please enter a number greater than 0."

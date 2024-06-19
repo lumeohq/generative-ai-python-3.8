@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Iterable
+from typing import Iterable
 import textwrap
 from typing import Any, Union, overload
 import reprlib
@@ -278,7 +278,7 @@ class GenerativeModel:
 
         ### Input type flexibility
 
-        While the underlying API strictly expects a `list[protos.Content]` objects, this method
+        While the underlying API strictly expects a `List[protos.Content]` objects, this method
         will convert the user input into the correct type. The hierarchy of types that can be
         converted is below. Any of these objects can be passed as an equivalent `dict`.
 
@@ -504,7 +504,7 @@ class ChatSession:
         enable_automatic_function_calling: bool = False,
     ):
         self.model: GenerativeModel = model
-        self._history: list[protos.Content] = content_types.to_contents(history)
+        self._history: List[protos.Content] = content_types.to_contents(history)
         self._last_sent: protos.Content | None = None
         self._last_received: generation_types.BaseGenerateContentResponse | None = None
         self.enable_automatic_function_calling = enable_automatic_function_calling
@@ -615,7 +615,7 @@ class ChatSession:
             ):
                 raise generation_types.StopCandidateException(response.candidates[0])
 
-    def _get_function_calls(self, response) -> list[protos.FunctionCall]:
+    def _get_function_calls(self, response) -> List[protos.FunctionCall]:
         candidates = response.candidates
         if len(candidates) != 1:
             raise ValueError(
@@ -635,14 +635,14 @@ class ChatSession:
         stream,
         tools_lib,
         request_options,
-    ) -> tuple[list[protos.Content], protos.Content, generation_types.BaseGenerateContentResponse]:
+    ) -> Tuple[List[protos.Content], protos.Content, generation_types.BaseGenerateContentResponse]:
 
         while function_calls := self._get_function_calls(response):
             if not all(callable(tools_lib[fc]) for fc in function_calls):
                 break
             history.append(response.candidates[0].content)
 
-            function_response_parts: list[protos.Part] = []
+            function_response_parts: List[protos.Part] = []
             for fc in function_calls:
                 fr = tools_lib(fc)
                 assert fr is not None, (
@@ -742,14 +742,14 @@ class ChatSession:
         stream,
         tools_lib,
         request_options,
-    ) -> tuple[list[protos.Content], protos.Content, generation_types.BaseGenerateContentResponse]:
+    ) -> Tuple[List[protos.Content], protos.Content, generation_types.BaseGenerateContentResponse]:
 
         while function_calls := self._get_function_calls(response):
             if not all(callable(tools_lib[fc]) for fc in function_calls):
                 break
             history.append(response.candidates[0].content)
 
-            function_response_parts: list[protos.Part] = []
+            function_response_parts: List[protos.Part] = []
             for fc in function_calls:
                 fr = tools_lib(fc)
                 assert fr is not None, (
@@ -782,7 +782,7 @@ class ChatSession:
             history=list(self.history),
         )
 
-    def rewind(self) -> tuple[protos.Content, protos.Content]:
+    def rewind(self) -> Tuple[protos.Content, protos.Content]:
         """Removes the last request/response pair from the chat history."""
         if self._last_received is None:
             result = self._history.pop(-2), self._history.pop()
@@ -799,7 +799,7 @@ class ChatSession:
         return self._last_received
 
     @property
-    def history(self) -> list[protos.Content]:
+    def history(self) -> List[protos.Content]:
         """The chat history."""
         last = self._last_received
         if last is None:

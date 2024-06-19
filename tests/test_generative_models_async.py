@@ -15,7 +15,7 @@
 
 import collections
 import sys
-from collections.abc import Iterable
+from typing import Iterable
 import os
 from typing import Any
 import unittest
