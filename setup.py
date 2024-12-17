@@ -46,7 +46,7 @@ dependencies = [
     "google-api-core",
     "google-api-python-client",
     "google-auth>=2.15.0",  # 2.15 adds API key auth support
-    "protobuf",
+    "protobuf==3.20.3",
     "pydantic",
     "tqdm",
     "typing-extensions",
